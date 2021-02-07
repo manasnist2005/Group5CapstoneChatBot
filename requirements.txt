@@ -11,4 +11,4 @@ matplotlib>=1.4.3
 pandas>=0.19
 tensorflow>=2.4.0
 flasgger>=0.9.5
-json>=3.9.0
+json
