@@ -1,11 +1,22 @@
 var loadingMsgIndex,
     botui = new BotUI('industry-bot'),
-    country = 'Country_01',
-    local = 'Local_01',
-	gender = 'Male',
-	isection = 'Metal',
-	eType = 'Employee',
-    API = 'https://api.github.com/repos/'	;
+    country = '1',
+    local = '1',
+	gender = '1',
+	date = '2012-04-23',
+	isection = '1',
+	eType = '1',
+	risk = '0',
+    API = 'https://api.github.com/repos/',
+    coutryLookup = [{text: 'Country_01',value: '1'}, {text: 'Country_02',value: '2'},{text: 'Country_03',  value: '3'}],
+	localLookup1 = [{text: 'Local_01',value: '1'}, {text: 'Local_03',value: '2'}, {text: 'Local_04',value: '4'}, {text: 'Local_06',value: '6'}, {text: 'Local_11',value: '11'}],
+	localLookup2 = [{text: 'Local_02',value: '2'}, {text: 'Local_05',value: '5'}, {text: 'Local_07',value: '7'}, {text: 'Local_08',value: '8'}, {text: 'Local_09',value: '9'}, {text: 'Local_12',value: '12'}],
+	localLookup3 = [{text: 'Local_10',value: '10'}],
+	industryLookup = [{text: 'Mining',value: '1'},{text: 'Metals',value: '2'},{text: 'others',value: '3'}],
+	genderLookup = [{text: 'Male',value: '1'},{text: 'Female',value: '2'}],
+	eTypeLookup = [{text: 'Employee',value: '1'},{text: 'Third Party',value: '2'},{text: 'Third Party (Remote)',value: '3'}],
+	riskLookup = [{text: 'Not Applicable',value: '0'},{text: 'Bees',value: '1'},{text: 'Blocking and isolation of energies)',value: '2'}];
+	
 
 botui.message
   .bot('Select your country :')
@@ -13,101 +24,59 @@ botui.message
     return botui.action.button({
       delay: 1000,
       addMessage: false, 
-      action: [{
-        text: 'Country_01',
-        value: 'Country_01'
-      }, {
-        text: 'Country_02',
-        value: 'Country_02'
-      }, {
-        text: 'Country_03',
-        value: 'Country_03'
-      }]
+      action: coutryLookup
     })
 }).then(function (res) {
    
     botui.message.human({
       delay: 500,
-      content: res.value
+      content: res.text
     });
 	country = res.value;
+	console.log("Country :"+ country); 
 	askLocal();
   
 });
 
 var askLocal = function () {
 	
-if(country == 'Country_01'){
+if(country == '1'){
 	botui.message
   .bot('Select your Local :')
   .then(function () {
     return botui.action.button({
       delay: 1000,
       addMessage: false, 
-      action: [{
-        text: 'Local_01',
-        value: 'Local_01'
-      }, {
-        text: 'Local_03',
-        value: 'Local_03'
-      }, {
-        text: 'Local_04',
-        value: 'Local_04'
-      }
-	  , {
-        text: 'Local_06',
-        value: 'Local_06'
-      }, {
-        text: 'Local_11',
-        value: 'Local_11'
-      }]
+      action: localLookup1
     })
 }).then(function (res) {
    
     botui.message.human({
       delay: 500,
-      content: res.value
+      content: res.text
     });
 	local = res.value;
+	console.log("Local :"+ local); 
 	askIndustrySection();
 });
 	}
-else if(country == 'Country_02'){
+else if(country == '2'){
 	botui.message
   .bot('Select your Local :')
   .then(function () {
     return botui.action.button({
       delay: 1000,
       addMessage: false, 
-      action: [{
-        text: 'Local_02',
-        value: 'Local_02'
-      }, {
-        text: 'Local_05',
-        value: 'Local_05'
-      }, {
-        text: 'Local_07',
-        value: 'Local_07'
-      }
-	  , {
-        text: 'Local_08',
-        value: 'Local_08'
-      }, {
-        text: 'Local_09',
-        value: 'Local_09'
-      }, {
-        text: 'Local_12',
-        value: 'Local_12'
-      }
-	  ]
+      action: localLookup2
     })
 }).then(function (res) {
    
     botui.message.human({
       delay: 500,
-      content: res.value
+      content: res.text
     });
 	local = res.value;
+	console.log("Local :"+ local); 
 	askIndustrySection();
 });
 }
@@ -119,18 +88,16 @@ else{
     return botui.action.button({
       delay: 1000,
       addMessage: false, 
-      action: [{
-        text: 'Local_10',
-        value: 'Local_10'
-      }]
+      action: localLookup3
     })
 }).then(function (res) {
    
     botui.message.human({
       delay: 500,
-      content: res.value
+      content: res.text
     });
 	local = res.value;
+	console.log("Local :"+ local);  
 	askIndustrySection();
   
 });
@@ -145,24 +112,16 @@ var askIndustrySection = function () {
     return botui.action.button({
       delay: 1000,
       addMessage: false, 
-      action: [{
-        text: 'Mining',
-        value: 'Mining'
-      },{
-        text: 'Metals',
-        value: 'Metals'
-      },{
-        text: 'others',
-        value: 'others'
-      }]
+      action: industryLookup
     })
 }).then(function (res) {
    
     botui.message.human({
       delay: 500,
-      content: res.value
+      content: res.text
     });
 	isection = res.value;
+	console.log("Industry Section :"+ isection); 
 	askEType();
 });
 
@@ -175,24 +134,16 @@ var askEType = function () {
     return botui.action.button({
       delay: 1000,
       addMessage: false, 
-      action: [{
-        text: 'Employee',
-        value: 'Employee'
-      },{
-        text: 'Third Party',
-        value: 'Third Party'
-      },{
-        text: 'Third Party (Remote)',
-        value: 'Third Party (Remote)'
-      }]
+      action: eTypeLookup
     })
 }).then(function (res) {
    
     botui.message.human({
       delay: 500,
-      content: res.value
+      content: res.text
     });
 	eType = res.value;
+	console.log("Employee Type :"+ eType); 
 	askGender();
 	
 });
@@ -208,23 +159,67 @@ var askGender = function () {
     return botui.action.button({
       delay: 1000,
       addMessage: false, 
-      action: [{
-        text: 'Male',
-        value: 'Male'
-      },{
-        text: 'Female',
-        value: 'Female'
-      }]
+      action: genderLookup
     })
 }).then(function (res) {
    
     botui.message.human({
       delay: 500,
-      content: res.value
+      content: res.text
     });
 	gender = res.value;
+	console.log("Gender :"+ gender); 
+	//init();
+	askCriticalRisk();
+});
+}
+
+var askCriticalRisk = function () {
+	botui.message
+  .bot('Select the Risk :')
+  .then(function () {
+    return botui.action.select({
+	action: {
+	placeholder : "Select Risk",
+	value: 'TR', // Selected value or selected object. Example: {value: "TR", text : "Türkçe" }
+	searchselect : true, // Default: true, false for standart dropdown
+	label : 'text', // dropdown label variable
+	options : riskLookup,
+	button: {
+	icon: 'check',
+	label: 'OK'
+	}
+	}
+	}).then(function (res) { 
+	risk = res.value;
+	console.log("Risk :"+ risk); 
+	askDate();
+});
+  });
+  
+}
+
+var askDate = function () {
+	botui.message
+  .bot('Select the Date :')
+  .then(function () {
+    return botui.action.text({
+      delay: 1000,
+      action: {
+        value: '2012-04-23',
+        placeholder: 'YYYY-MM-DD'
+      }
+    })
+}).then(function (res) {   
+    botui.message.human({
+      delay: 500,
+      content: res.value
+    });
+	date = res.value;
+	console.log("Date :"+ date); 
 	init();
 });
+
 }
 
 function sendXHR(repo, cb) {
@@ -284,7 +279,7 @@ function LoadJson(key){
     $.ajax({
         'async': false,
         'global': false,
-        'url': "http://localhost:7071/json1.json",
+        'url': "/json1.json",
         'dataType': "json",
         'success': function (data) {
             json = data;
