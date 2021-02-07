@@ -6,7 +6,6 @@ Created on Fri Feb  5 00:29:58 2021
 """
 
 from flask import Flask, request, jsonify
-from flasgger import Swagger
 import numpy as np
 import pandas as pd
 from keras.models import model_from_json
@@ -21,7 +20,6 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
  #   model = pickle.load(model_file)
 
 app = Flask(__name__)
-swagger = Swagger(app)
 
 Week_day1 = {"Sunday":0,"Monday":1,"Tuesday":2,"Wednesday":3,"Thrusday":4,"Friday":5,"Saturday":6}
 Season1 = {"Spring":1,"Summer":2,"Autumn":3,"Winter":4}
