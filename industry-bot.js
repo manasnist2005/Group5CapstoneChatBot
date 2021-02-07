@@ -181,7 +181,7 @@ var askCriticalRisk = function () {
     return botui.action.select({
 	action: {
 	placeholder : "Select Risk",
-	value: '1', // Selected value or selected object. Example: {value: "1", text : "Bees" }
+	value: 'TR', // Selected value or selected object. Example: {value: "TR", text : "Türkçe" }
 	searchselect : true, // Default: true, false for standart dropdown
 	label : 'text', // dropdown label variable
 	options : riskLookup,
