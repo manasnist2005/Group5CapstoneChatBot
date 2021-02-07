@@ -133,6 +133,6 @@ def predict_json():
     #prediction = model.predict(input_data)
     return jsonify({"pedict":y_pred})
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True)
     
     
