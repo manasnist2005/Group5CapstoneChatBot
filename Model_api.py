@@ -3,7 +3,7 @@
 Created on Fri Feb  5 00:29:58 2021
 
 @author: lalatendu
-"""
+
 
 import pickle
 from flask import Flask, request, jsonify
@@ -16,7 +16,7 @@ import json
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-
+"""
 
 #with open('/var/www/flask_predict_api/rf.pkl', 'rb') as model_file:
  #   model = pickle.load(model_file)
@@ -106,13 +106,13 @@ def predict_json():
     gender = data.get("Gender")
     employee_type = data.get("Employee_Type")
     critical_risk = data.get("Critical_Risk")
-    year,month,day,weekday,season=data_extact(data.get("Date"))	
+    year,month,day,weekday,season = data_extact(data.get("Date"))	
     description = data.get("Description")
     
-    print("Input data :")        
+    #print("Input data :")        
     print(country,local,industry_Sector,gender,employee_type,critical_risk,year,month,day,weekday,season)
 
-    print(description)
+    #print(description)
 
     # cat_data=[country,local,industry_Sector,gender,employee_type,critical_risk,year,month,day,weekday,season]
     #nlp_data,cat_data=input_datafarame([country,local,industry_Sector,gender,employee_type,critical_risk,year,month,day,weekday,season,description])
@@ -132,7 +132,8 @@ def predict_json():
     #input_data = pd.read_csv(request.files.get("input_file"), header=None)
     #prediction = model.predict(input_data)
     return jsonify({"pedict":y_pred})
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+
+   if __name__ == "__main__":
+    app.run(debug=True)
     
     
