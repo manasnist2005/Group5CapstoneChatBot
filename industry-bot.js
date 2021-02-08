@@ -7,7 +7,7 @@ var loadingMsgIndex,
 	isection = '1',
 	eType = '1',
 	risk = '0',
-    API = 'https://api.github.com/repos/',
+    API = 'http://0.0.0.0:5000/predict',
     coutryLookup = [{text: 'Country_01',value: '1'}, {text: 'Country_02',value: '2'},{text: 'Country_03',  value: '3'}],
 	localLookup1 = [{text: 'Local_01',value: '1'}, {text: 'Local_03',value: '2'}, {text: 'Local_04',value: '4'}, {text: 'Local_06',value: '6'}, {text: 'Local_11',value: '11'}],
 	localLookup2 = [{text: 'Local_02',value: '2'}, {text: 'Local_05',value: '5'}, {text: 'Local_07',value: '7'}, {text: 'Local_08',value: '8'}, {text: 'Local_09',value: '9'}, {text: 'Local_12',value: '12'}],
@@ -273,17 +273,28 @@ function sendXHR1(key) {
 }
 
 function LoadJson(key){
-	var url = "url?data=" + encodeURIComponent(JSON.stringify({"country": country, "local": local, "gender": gender, "isection": isection, "eType": eType}));
-	console.log(url);
+	var accident_deatils = {
+          "Country": country,
+		  "Local": local,
+		  "Industry_Sector":isection,
+		  "Gender":gender,
+		  "Employee_Type":eType,
+		  "Critical_Risk":risk,
+		  "Date" :date,
+		  "Description":key
+       };
+	//var url = "url?data=" + encodeURIComponent(JSON.stringify({"country": country, "local": local, "gender": gender, "isection": isection, "eType": eType,"":}));
+	//console.log(url);
 	var json = null;
     $.ajax({
         'async': false,
         'global': false,
-        'url': "/json1.json",
+        'url': API,
         'dataType': "json",
         'success': function (data) {
             json = data;
-        }
+        },
+		data : accident_deatils
     });
 return(json[key]);
 console.log(json[key]);
