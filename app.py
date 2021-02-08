@@ -31,7 +31,7 @@ def input_datafarame(lst):
     print(df)
     return X_nlp,X_cat
 
-def read_model():
+'''def read_model():
     # load json and create model
     json_file = open('model.json', 'r')
     loaded_model_json = json_file.read()
@@ -40,7 +40,7 @@ def read_model():
     # load weights into new model
     loaded_model=loaded_model.load_weights("model.h5")
     print("Loaded model from disk")
-    return loaded_model
+    return loaded_model'''
 
 def tokenizer_text(data):
     print("tokenizer_text")
