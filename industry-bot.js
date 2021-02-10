@@ -254,27 +254,17 @@ function sendXHR1(key,showAccidentLevel) {
     
 var text = "{\"accident_deatils\": {\"Country\": "+country+",\"Local\": "+local+",\"Industry_Sector\": "+isection+",\"Gender\": "+gender+",\"Employee_Type\": "+eType+",\"Critical_Risk\": "+risk+",\"Date\": \""+date+"\",\"Description\":\""+key+"\"}}"
 
-/*
-var obj = JSON.parse(text);
-	
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', API);
-  xhr.onload = function () {
-    var res = JSON.parse(xhr.responseText)
-	showAccidentLevel(xhr.responseText)
-  }
-  xhr.send(text);
-  */
   
   $.ajax({
             url: API,
             type: 'Post',
             dataType: 'json',
             contentType: 'application/json',
+			data: text,
             success: function (data) {
-                alert(data);
-            },
-            data: JSON.parse(text)
+                alert(data['pedict']);
+				showAccidentLevel(data['pedict'])
+            }            
         });
 }
 
