@@ -7,7 +7,7 @@ var loadingMsgIndex,
 	isection = '1',
 	eType = '1',
 	risk = '0',
-    API = 'http://0.0.0.0:5000/predict',
+    API = 'https://nlp-bot-batch5.herokuapp.com/predict',
     coutryLookup = [{text: 'Country_01',value: '1'}, {text: 'Country_02',value: '2'},{text: 'Country_03',  value: '3'}],
 	localLookup1 = [{text: 'Local_01',value: '1'}, {text: 'Local_03',value: '2'}, {text: 'Local_04',value: '4'}, {text: 'Local_06',value: '6'}, {text: 'Local_11',value: '11'}],
 	localLookup2 = [{text: 'Local_02',value: '2'}, {text: 'Local_05',value: '5'}, {text: 'Local_07',value: '7'}, {text: 'Local_08',value: '8'}, {text: 'Local_09',value: '9'}, {text: 'Local_12',value: '12'}],
@@ -181,7 +181,7 @@ var askCriticalRisk = function () {
     return botui.action.select({
 	action: {
 	placeholder : "Select Risk",
-	value: 'TR', // Selected value or selected object. Example: {value: "TR", text : "Türkçe" }
+	value: '1', // Selected value or selected object. Example: {value: "TR", text : "Türkçe" }
 	searchselect : true, // Default: true, false for standart dropdown
 	label : 'text', // dropdown label variable
 	options : riskLookup,
@@ -222,16 +222,7 @@ var askDate = function () {
 
 }
 
-function sendXHR(repo, cb) {
-  var xhr = new XMLHttpRequest();
-  var self = this;
-  xhr.open('GET', API + repo);
-  xhr.onload = function () {
-    var res = JSON.parse(xhr.responseText)
-    cb(res.stargazers_count);
-  }
-  xhr.send();
-}
+
 
 function init() {
   botui.message
@@ -253,48 +244,56 @@ function init() {
       loading: true
     }).then(function (index) {
       loadingMsgIndex = index;
-      sendXHR1(res.value)
+      sendXHR1(res.value,showAccidentLevel)
     });
   });
 }
 
-function showStars(stars) {
+
+function sendXHR1(key,showAccidentLevel) {
+    
+var text = "{\"accident_deatils\": {\"Country\": "+country+",\"Local\": "+local+",\"Industry_Sector\": "+isection+",\"Gender\": "+gender+",\"Employee_Type\": "+eType+",\"Critical_Risk\": "+risk+",\"Date\": \""+date+"\",\"Description\":\""+key+"\"}}"
+
+/*
+var obj = JSON.parse(text);
+	
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', API);
+  xhr.onload = function () {
+    var res = JSON.parse(xhr.responseText)
+	showAccidentLevel(xhr.responseText)
+  }
+  xhr.send(text);
+  */
+  
+  $.ajax({
+            url: API,
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data) {
+                alert(data);
+            },
+            data: JSON.stringify(text)
+        });
+}
+
+
+function showAccidentLevel(lvl) {
   botui.message
   .update(loadingMsgIndex, {
-    content: 'it has !(star) ' + (stars || "0") + ' stars.'
+    content: 'Accident Level :' + (lvl || "Not found")  
   })
   .then(init); // ask again for repo. Keep in loop.
 }
 
-
-function sendXHR1(key) {
-	
-	var jsonstinrg = '{"accident_deatils": {
-        "Country": country,
-        "Local": local,
-        "Industry_Sector": isection,
-        "Gender": gender,
-        "Employee_Type": eType,
-        "Critical_Risk": risk,
-        "Date": date,
-        "Description": key  }}'
-	
-  var xhr = new XMLHttpRequest();
-  xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.open('POST', API);
-  xhr.onload = function () {
-    var res = JSON.parse(xhr.responseText)
-    
-  }
-  xhr.send(jsonstinrg);
-}
 
 /*
 function sendXHR1(key) {
   var alvl = LoadJson(key);
   showAccidentLevel(alvl);
 }
-*/
+
 
 function LoadJson(key){
 	var accident_deatils = {
@@ -325,10 +324,21 @@ return(json[key]);
 console.log(json[key]);
 }
 
-function showAccidentLevel(lvl) {
+function sendXHR(repo, cb) {
+  var xhr = new XMLHttpRequest();
+  var self = this;
+  xhr.open('GET', API + repo);
+  xhr.onload = function () {
+    var res = JSON.parse(xhr.responseText)
+    cb(res.stargazers_count);
+  }
+  xhr.send();
+}
+function showStars(stars) {
   botui.message
   .update(loadingMsgIndex, {
-    content: 'Accident Level :' + (lvl || "Not found")  
+    content: 'it has !(star) ' + (stars || "0") + ' stars.'
   })
   .then(init); // ask again for repo. Keep in loop.
 }
+*/
