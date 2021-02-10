@@ -268,13 +268,13 @@ var obj = JSON.parse(text);
   
   $.ajax({
             url: API,
-            type: 'post',
+            type: 'Post',
             dataType: 'json',
             contentType: 'application/json',
             success: function (data) {
                 alert(data);
             },
-            data: JSON.stringify(text)
+            data: JSON.parse(text)
         });
 }
 
