@@ -268,9 +268,33 @@ function showStars(stars) {
 
 
 function sendXHR1(key) {
+	
+	var jsonstinrg = '{"accident_deatils": {
+        "Country": country,
+        "Local": local,
+        "Industry_Sector": isection,
+        "Gender": gender,
+        "Employee_Type": eType,
+        "Critical_Risk": risk,
+        "Date": date,
+        "Description": key  }}'
+	
+  var xhr = new XMLHttpRequest();
+  xhr.setRequestHeader('Content-Type', 'application/json')
+  xhr.open('POST', API);
+  xhr.onload = function () {
+    var res = JSON.parse(xhr.responseText)
+    
+  }
+  xhr.send(jsonstinrg);
+}
+
+/*
+function sendXHR1(key) {
   var alvl = LoadJson(key);
   showAccidentLevel(alvl);
 }
+*/
 
 function LoadJson(key){
 	var accident_deatils = {
@@ -290,11 +314,12 @@ function LoadJson(key){
         'async': false,
         'global': false,
         'url': API,
+		'body' : accident_deatils,
         'dataType': "json",
         'success': function (data) {
             json = data;
-        },
-		data : accident_deatils
+        }
+		
     });
 return(json[key]);
 console.log(json[key]);
@@ -307,6 +332,3 @@ function showAccidentLevel(lvl) {
   })
   .then(init); // ask again for repo. Keep in loop.
 }
-
-
-
