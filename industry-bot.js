@@ -262,8 +262,7 @@ var text = "{\"accident_deatils\": {\"Country\": "+country+",\"Local\": "+local+
             contentType: 'application/json',
 			data: text,
             success: function (data) {
-                alert(data['pedict']);
-				showAccidentLevel(data['pedict'])
+                showAccidentLevel(data['pedict']);
             }            
         });
 }
