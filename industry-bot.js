@@ -24,7 +24,7 @@ botui.message
   .bot('Select your country :')
   .then(function () {
     return botui.action.button({
-      delay: 1000,
+      delay: 500,
       addMessage: false, 
       action: coutryLookup
     })
@@ -48,7 +48,7 @@ if(country == 'Country_01'){
   .bot('Select your Local :')
   .then(function () {
     return botui.action.button({
-      delay: 1000,
+      delay: 500,
       addMessage: false, 
       action: localLookup1
     })
@@ -68,7 +68,7 @@ else if(country == 'Country_02'){
   .bot('Select your Local :')
   .then(function () {
     return botui.action.button({
-      delay: 1000,
+      delay: 500,
       addMessage: false, 
       action: localLookup2
     })
@@ -88,7 +88,7 @@ else{
   .bot('Select your Local :')
   .then(function () {
     return botui.action.button({
-      delay: 1000,
+      delay: 500,
       addMessage: false, 
       action: localLookup3
     })
@@ -112,7 +112,7 @@ var askIndustrySection = function () {
   .bot('Select your Industry Section :')
   .then(function () {
     return botui.action.button({
-      delay: 1000,
+      delay: 500,
       addMessage: false, 
       action: industryLookup
     })
@@ -134,7 +134,7 @@ var askEType = function () {
   .bot('Select your Employee Type :')
   .then(function () {
     return botui.action.button({
-      delay: 1000,
+      delay: 500,
       addMessage: false, 
       action: eTypeLookup
     })
@@ -159,7 +159,7 @@ var askGender = function () {
   .bot('Select your Gender :')
   .then(function () {
     return botui.action.button({
-      delay: 1000,
+      delay: 500,
       addMessage: false, 
       action: genderLookup
     })
@@ -206,8 +206,9 @@ var askDate = function () {
   .bot('Select the Date :')
   .then(function () {
     return botui.action.text({
-      delay: 1000,
+      delay: 500,
       action: {
+		sub_type: 'date',
         value: '2016-01-01',
         placeholder: '2016-01-01'
       }
@@ -226,24 +227,25 @@ var askDate = function () {
 function askKey() {
   botui.message
   .bot({
-    delay: 1000,
+    delay: 500,
     content: 'Provide the description to find the Accident and Potential Accident level:'
   })
   .then(function () {
     return botui.action.text({
-      delay: 1000,
+      delay: 500,
       action: {
+		size: 50,
         value: '',
         placeholder: ''
       }
     })
   }).then(function (res) {
     loadingMsgIndex = botui.message.bot({
-      delay: 200,
+      delay: 5000,
       loading: true
     }).then(function (index) {
       loadingMsgIndex = index;
-      sendXHR1(res.value,showAccidentLevel)
+      sendXHR(res.value,showAccidentLevel)
     });
   });
 }
@@ -253,7 +255,7 @@ var continuefunc = function(){
   .bot('Do you want to Continue ?')
   .then(function () {
     return botui.action.button({
-      delay: 1000,
+      delay: 10,
       addMessage: false, // so we could the address in message instead if 'Existing Address'
       action: [{
         text: 'YES',
@@ -265,7 +267,7 @@ var continuefunc = function(){
     })
 }).then(function (res) {
 	botui.message.human({
-      delay: 500,
+      delay: 10,
       content: res.text
     });
   if(res.value == 'yes') {       
@@ -282,7 +284,7 @@ var continuefunc = function(){
 
 
 
-function sendXHR1(key,showAccidentLevel) {
+function sendXHR(key,showAccidentLevel) {
     
 var text = "{\"accident_deatils\": {\"Country\": \""+country+"\",\"Local\": \""+local+"\",\"Industry_Sector\": \""+isection+"\",\"Gender\": \""+gender+"\",\"Employee_Type\": \""+eType+"\",\"Critical_Risk\": \""+risk+"\",\"Date\": \""+date+"\",\"Description\":\""+key+"\"}}"
 
